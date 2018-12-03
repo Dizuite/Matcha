@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Matcha</title>
+	<link rel="stylesheet" type="text/css" href="/assets/datetimepicker/bootstrap-datetimepicker.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="assets/sweetalert-master/dist/sweetalert.css">
+	<link rel="stylesheet" type="text/css" href="index.css">
+	<meta name="viewport" content="initial-scale=1.0,width=device-width">
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+		 <div class="navbar-header">
+			 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+				 <span class="sr-only">Toggle navigation</span>
+				 <span class="icon-bar"></span>
+				 <span class="icon-bar"></span>
+				 <span class="icon-bar"></span>
+			 </button>
+			 <a class="navbar-brand" href="/">Matcha</a>
+		 </div>
+		 <div id="navbar" class="navbar-collapse collapse">
+			 <form class="navbar-form navbar-right" id="formulaire_connexion">
+				 <div class="form-group">
+					 <input type="email" placeholder="Courriel" class="form-control" name="login">
+				 </div>
+				 <div class="form-group">
+					 <input type="password" placeholder="Mot de passe" class="form-control" name="pass">
+				 </div>
+				 <button type="submit" class="btn btn-success">Connexion</button>
+				 <button type="button" class="btn btn-default" onclick="mp_oublie()" >Mot de passe oublié ?</button>
+			 </form>
+			 <br>
+		 </div>
+ </nav>
+<div class="content">
+<h2 class="title">Inscrivez-vous</h2>
+<p class="title_2">Et trouvez l'amour sur Matcha</p>
+<br>
+<br>
+<form class="form-horizontal" id="formulaire_inscription">
+  <div class="form-group">
+    <label class="control-label col-sm-2" for="prenom">Prénom:</label>
+    <div class="col-sm-10">
+      <input type="text" name="prenom" class="form-control" id="prenom" placeholder="Votre prénom" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-sm-2" for="nom">Nom:</label>
+    <div class="col-sm-10">
+      <input type="text" name="nom" class="form-control" id="nom" placeholder="Votre nom" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-sm-2" for="email">Courriel:</label>
+    <div class="col-sm-10">
+      <input type="email" name="email" class="form-control" id="email" placeholder="Votre courriel" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-sm-2" for="mp">Mot de passe:</label>
+    <div class="col-sm-10">
+      <input type="password" name="mp" class="form-control" id="mp" placeholder="Votre mot de passe" required>
+    </div>
+  </div>
+	<div class="form-group">
+		<label class="control-label col-sm-2">Date de naissance:</label>
+		<div class='col-sm-10'>
+			<input type='text' class="form-control" id='datetimepicker9' name="date_naissance" placeholder="Date de naissance" required/>
+		</div>
+	</div>
+  <div class="form-group">
+		<label class="control-label col-sm-2">Sexe:</label>
+    <div class="col-sm-10">
+			<select class="form-control" name="sexe" required>
+				<option disabled selected></option>
+				<option value="Femme">Femme</option>
+				<option value="Homme">Homme</option>
+			</select>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-success">Inscription</button>
+    </div>
+  </div>
+</form>
+</div>
+<script type="text/javascript" src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="/assets/bootstrap/js/moment-with-locales.js"></script>
+<script src='/assets/datetimepicker/bootstrap-datetimepicker.js'></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="assets/sweetalert-master/dist/sweetalert.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$.post("/info", $(this).serialize()).done(function(res) {
+		if (res.login != 'visiteur' && res.login != undefined) {
+			document.location.href="http://localhost:3000/profil";
+		}
+	});
+});
+function effacer(id_form) {
+  $(':input', id_form)
+   .not(':button, :submit, :reset, :hidden')
+   .val('')
+   .removeAttr('checked')
+   .removeAttr('selected');
+}
+if ($(location).attr('href').split('/')[3] == "P3bvD" && $(location).attr('href').split('/')[4] == undefined) {
+	sweetAlert("Cool", "Compte validé", "success");
+	history.pushState({ path: this.path }, '', 'http://localhost:3000');
+}
+else if ($(location).attr('href').split('/')[3] == "P3bvT" && $(location).attr('href').split('/')[4] == undefined) {
+	sweetAlert("Merde", "Token invalide", "error");
+	history.pushState({ path: this.path }, '', 'http://localhost:3000');
+}
+else if ($(location).attr('href').split('/')[3] == "P3bvP" && $(location).attr('href').split('/')[4] == undefined) {
+	sweetAlert("Cool", "Mot de passe changé", "success");
+	history.pushState({ path: this.path }, '', 'http://localhost:3000');
+}
+else if ($(location).attr('href').split('/')[3] == "P3bvC" && $(location).attr('href').split('/')[4] == undefined) {
+	sweetAlert("Cool", "L'adresse email a correctement été modifiée", "success");
+	history.pushState({ path: this.path }, '', 'http://localhost:3000');
+}
+function mp_oublie() {
+	swal({
+	  title: "Entrez votre courriel",
+	  text: "Vous recevrez un email pour reinitialiser votre mot de passe",
+	  type: "input",
+	  showCancelButton: true,
+	  closeOnConfirm: false,
+	  animation: "slide-from-top",
+	  inputPlaceholder: "Courriel"
+	},
+	function(inputValue){
+	  if (inputValue === false) return false;
+	  if (inputValue === "") {
+	    swal.showInputError("Vous devez rentrer votre adresse mail");
+	    return false;
+	  }
+		else {
+			var inputEmail = inputValue;
+			swal({
+				title: "Nouveau mot de passe",
+				text: "Entrez votre nouveau mot de passe",
+				type: "input",
+				inputType: "password",
+				showCancelButton: true,
+				closeOnConfirm: false,
+				animation: "slide-from-top",
+				inputPlaceholder: "Nouveau mot de passe"
+			},
+			function(inputValue){
+				if (inputValue === false) return false;
+				if (inputValue === "") {
+  				swal.showInputError("Vous devez entrer un mot de passe valide!");
+  				return false
+				}
+				else if (!inputValue.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/)) {
+					swal.showInputError("Vous devez entrer un mot de passe valide!");
+					return false
+				}
+				$.post("/connexion/mp_oublie", {email: inputEmail, new_pass: inputValue }).done(function(res) {
+					if (res.res == "ok"){
+						swal("Cool", "Un email de changement de mot de passe a été envoyé a " + inputEmail, "success");
+					}
+					else {
+						sweetAlert("Putain", res.res, "error");
+					}
+				});
+			});
+		}
+	});
+}
+$(document).ready(function() {
+	$("#formulaire_inscription").submit(function(e) {
+		e.preventDefault();
+		$.post("/inscription", $(this).serialize()).done(function(res) {
+			if (res.res == "ok"){
+				effacer("#formulaire_inscription");
+				swal("Cool", "Votre inscription est valide, regardez vos mails", "success")
+			}
+			else {
+				sweetAlert("Putain", res.res, "error");
+			}
+		});
+	});
+	$("#formulaire_connexion").submit(function(e){
+		e.preventDefault();
+		$.post("/connexion", $(this).serialize()).done(function(res) {
+			if (res.res == "ok") {
+				document.location.href="http://localhost:3000/profil";
+			}
+			else {
+				effacer("#formulaire_connexion");
+				sweetAlert("Putain", res.res, "error");
+			}
+		});
+	});
+	$('#datetimepicker9').datetimepicker({
+			viewMode: 'years',
+			format: 'DD/MM/YYYY'
+	});
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Matcha</title>
+	<link rel="stylesheet" type="text/css" href="/assets/datetimepicker/bootstrap-datetimepicker.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="assets/sweetalert-master/dist/sweetalert.css">
+	<link rel="stylesheet" type="text/css" href="index.css">
+	<link rel="stylesheet" type="text/css" href="assets/jQuery-Tags-Input/src/jquery.tagsinput.css" />
+	<meta name="viewport" content="initial-scale=1.0,width=374">
+</head>
+<body>
+<nav id="navbar" class="navbar navbar-inverse navbar-fixed-top">
+	<a class="navbar-brand" href="/">Matcha</a>
+	<button type="button" id="bouton_deco" class="btn btn-default btn-s">
+		<span class="glyphicon glyphicon-eject" aria-hidden="true"></span>
+	</button>
+	<button type="button" id="bouton_parcour" class="btn btn-default btn-s">
+		<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+	</button>
+	<button type="button" id="bouton_profil" class="btn btn-default btn-s">
+		<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+	</button>
+	<button type="button" id="bouton_notif" class="btn btn-default btn-s">
+		<span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span>
+		<span id="nb_notif">99+</span>
+	</button>
+</nav>
+<section class="content">
+	<img id="profil_pic" src="" alt="Photo_de_profil">
+	<br>
+	<button type="button" id="bouton_photo" class="btn btn-default btn-s">
+		<span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
+	</button>
+	<button type="button" id="bouton_love" class="btn btn-default btn-s">
+		<span id="nb_love">18</span>
+		<span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+	</button>
+	<p class="text_presentation"><em class="prenom"></em> <em class="nom"></em>, <em class="age"></em> ans</p>
+	<p><em class="text_email"></em></p>
+	<div>
+		<img class="img_sexe" src="" alt="homme">
+		<p class="inte_par">intéressé par</p>
+		<select id="select_sexe">
+			<option value="homme">Hommes</option>
+			<option value="femme">Femmes</option>
+			<option value="homme_et_femme">Les deux</option>
+		</select>
+	</div>
+	<%# <div class="div_localisation">
+		<button type="button" id="bouton_globe" class="btn btn-default btn-s">
+			<span id="globe" class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+		</button><p id="localisation">Paris 18éme</p>
+	</div>%>
+	<div id="map"><p>Activez la localisation pour matcher avec les personnes autour de vous.</p></div>
+	<textarea id="textarea_bio" placeholder="Votre Biographie:"></textarea>
+	<br/>
+	<div class="div_tags">
+		<input class="input_tag" name="tags" id="tags" value="" />
+		<button type="button" id="bouton_ok" class="btn btn-default btn-s">
+			<span id="globe" class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+		</button>
+	</div>
+	<p id="p_users">Derniers Likes :</p>
+	<div class="div_photo_users">
+		<img src="../img/user_pic/user_pic_default.png" alt="Photo_de_profil">
+		<img src="../img/user_pic/user_pic_default.png" alt="Photo_de_profil">
+		<img src="../img/user_pic/user_pic_default.png" alt="Photo_de_profil">
+	</div>
+	<p id="p_users">Dernieres consultations :</p>
+	<div class="div_photo_users">
+		<img src="../img/user_pic/user_pic_default.png" alt="Photo_de_profil">
+		<img src="../img/user_pic/user_pic_default.png" alt="Photo_de_profil">
+		<img src="../img/user_pic/user_pic_default.png" alt="Photo_de_profil">
+		<img src="../img/user_pic/user_pic_default.png" alt="Photo_de_profil">
+		<img src="../img/user_pic/user_pic_default.png" alt="Photo_de_profil">
+	</div>
+	<div id="fade_out_popup">
+		<div id="popup_add_photo">
+			<form id="form_upload_file" method="post" action="upload.php" enctype="multipart/form-data">
+				<input id="input_titre_2" type="text" name="titre_upload" placeholder="Titre de la photo" onchange="func_title(this)">
+				<br><input id="input_upload_file" type="file" accept="image/png" name="upload_file" onchange="openFile(event)">
+			</form>
+		</div>
+	</div>
+</section>
+<script type="text/javascript" src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="/assets/bootstrap/js/moment-with-locales.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="assets/sweetalert-master/dist/sweetalert.min.js"></script>
+<script src="assets/jQuery-Tags-Input/src/jquery.tagsinput.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDw2V2AnIBCri07PgWORQEB9v1voB1v_6o&callback=initMap" async defer></script>
+<script>
+$('#tags').tagsInput();
+$(document).ready(function() {
+	$.post("/info", $(this).serialize()).done(function(res) {
+		if (res.login == "visiteur" || res.login == undefined) {
+			document.location.href="http://localhost:3000";
+		}
+		else {
+			$('.prenom').text(res.prenom);
+			$('.nom').text(res.nom);
+			$('.age').text(res.age);
+			$('.text_email').text(res.login);
+			if (res.sexe == "Homme") {
+				$('.img_sexe').attr('src','img/icon/icon_male.png');
+			}
+			else {
+				$('.img_sexe').attr('src','img/icon/icon_female.png');
+			}
+			$('#profil_pic').attr('src', '../img/user_pic/' + res.photo_profil + '.png');
+			$('#select_sexe option[value=' + res.interesse_par + ']').attr('selected', 'selected');
+			$('#localisation').text(res.localisation);
+			$('#textarea_bio').text(res.biographie);
+			let tab_tag;
+			let i = 0;
+			tab_tag = res.tag.split('	');
+			while (tab_tag[i] != undefined) {
+				$('#tags').addTag(tab_tag[i]);
+				i = i + 1;
+			}
+		}
+	});
+});
+$('#bouton_deco').on('click', function(){
+	$.post("/deco", $(this).serialize()).done(function(res) {
+		document.location.href="http://localhost:3000";
+	});
+});
+
+$('#bouton_photo').on('click', function(){
+	$("#fade_out_popup").css('display', 'flex');
+});
+
+$('.prenom').on('click', function(){
+	swal({
+	  title: "Souhaitez vous modifier votre prénom ?",
+	  text: "Vous pouvez modifier votre prénom autant de fois que vous le voulez",
+	  type: "warning",
+	  showCancelButton: true,
+	  confirmButtonColor: "#7DAA92",
+	  confirmButtonText: "Modifier",
+	  closeOnConfirm: false
+	},
+	function(){
+		swal({
+		  title: "Changement de prénom",
+		  text: "Entrez votre nouveau prénom",
+		  type: "input",
+		  showCancelButton: true,
+		  closeOnConfirm: false,
+		  animation: "slide-from-top",
+		  inputPlaceholder: "Prénom"
+		},
+		function(inputValue){
+		  if (inputValue === false) return false;
+		  if (inputValue === "") {
+		    swal.showInputError("Vous devez rentrer un prénom");
+		    return false
+		  }
+			$.post("/info/ch_prenom", {prenom: inputValue}).done(function(res) {
+				if (res.res == 'ok') {
+					swal("Parfait!", "Votre prénom a été changé, " + inputValue, "success");
+					$('.prenom').text(inputValue);
+				}
+				else {
+					swal("Une erreur s'est produite", "Votre prénom n'a pas été changé", "error");
+				}
+			});
+		});
+	});
+});
+$('.nom').on('click', function(){
+	swal({
+	  title: "Souhaitez vous modifier votre nom ?",
+	  text: "Vous pouvez modifier votre nom autant de fois que vous le voulez",
+	  type: "warning",
+	  showCancelButton: true,
+	  confirmButtonColor: "#7DAA92",
+	  confirmButtonText: "Modifier",
+	  closeOnConfirm: false
+	},
+	function(){
+		swal({
+		  title: "Changement de nom",
+		  text: "Entrez votre nouveau nom",
+		  type: "input",
+		  showCancelButton: true,
+		  closeOnConfirm: false,
+		  animation: "slide-from-top",
+		  inputPlaceholder: "Nom"
+		},
+		function(inputValue){
+		  if (inputValue === false) return false;
+		  if (inputValue === "") {
+		    swal.showInputError("Vous devez rentrer un nom");
+		    return false
+		  }
+			$.post("/info/ch_nom", {nom: inputValue}).done(function(res) {
+				if (res.res == 'ok') {
+					swal("Parfait!", "Votre nom a été changé, monsieur " + inputValue, "success");
+					$('.nom').text(inputValue);
+				}
+				else {
+					swal("Une erreur s'est produite", "Votre nom n'a pas été changé", "error");
+				}
+			});
+		});
+	});
+});
+$('.text_email').on('click', function(){
+	swal({
+	  title: "Souhaitez vous modifier votre adresse email ?",
+	  text: "Vous pouvez modifier votre adresse email autant de fois que vous le voulez",
+	  type: "warning",
+	  showCancelButton: true,
+	  confirmButtonColor: "#7DAA92",
+	  confirmButtonText: "Modifier",
+	  closeOnConfirm: false
+	},
+	function(){
+		swal({
+		  title: "Changement d'adresse email",
+		  text: "Entrez votre nouvelle adresse email",
+		  type: "input",
+		  showCancelButton: true,
+		  closeOnConfirm: false,
+		  animation: "slide-from-top",
+		  inputPlaceholder: "Email"
+		},
+		function(inputValue){
+		  if (inputValue === false) return false;
+		  if (inputValue === "") {
+		    swal.showInputError("Vous devez rentrer une adresse email");
+		    return false
+		  }
+			$.post("/info/ch_email", {email: inputValue}).done(function(res) {
+				if (res.res == 'ok') {
+					swal("Parfait!", "Un mail de confirmation a été envoyé a " + inputValue, "success");
+				}
+				else {
+					swal("Une erreur s'est produite", "Votre adresse email n'a pas été changé", "error");
+				}
+			});
+		});
+	});
+});
+$('.img_sexe').on('click', function(){
+	swal({
+	  title: "Souhaitez vous changer de sexe ?",
+	  text: "Assurez-vous de bien avoir fait l'opération chirurgicale avant de modifier votre statut",
+	  type: "warning",
+	  showCancelButton: true,
+	  confirmButtonColor: "#7DAA92",
+	  confirmButtonText: "Oui, modifier",
+	  closeOnConfirm: false
+	},
+	function(){
+		$.post("/info/ch_sexe").done(function(res) {
+			if (res.res == 'ok') {
+				if ($('.img_sexe').attr('src') == 'img/icon/icon_male.png') {
+					$('.img_sexe').attr('src','img/icon/icon_female.png');
+				}
+				else {
+					$('.img_sexe').attr('src','img/icon/icon_male.png');
+				}
+				swal("Parfait!", "Votre sexe a bien été changé !", "success");
+			}
+			else {
+				swal("Une erreur s'est produite", "Votre sexe n'a pas été changé", "error");
+			}
+		});
+	});
+});
+$('#select_sexe').on('change', function() {
+	$.post("/info/ch_interesse_par", {interesse_par : this.value}).done(function(res) {
+		swal("Nickel", "Vos interêts ont correctement été modifiés", "success");
+	});
+});
+
+function maPosition(position) {
+	$.post("/info/ch_localisation", {latitude : position.coords.latitude, longitude : position.coords.longitude}).done(function(res) {
+		swal('Votre position a été mise a jour');
+	});
+	map = new google.maps.Map(document.getElementById('map'), {
+		center: {lat: position.coords.latitude, lng: position.coords.longitude},
+		zoom: 15
+	});
+	var optionsMarqueur = {
+		position: map.getCenter(),
+		map: map
+	};
+	var marqueur = new google.maps.Marker(optionsMarqueur);
+}
+
+function posRefuse(error) {
+	$.get("//freegeoip.net/json/?callback=").then(function (res) {
+		$.post("/info/ch_localisation", {latitude : res.latitude, longitude : res.longitude}).done(function(res) {
+			swal('Votre position a été mise a jour, activez la localisation par gps pour plus de precision');
+		});
+		map = new google.maps.Map(document.getElementById('map'), {
+			center: {lat: res.latitude, lng: res.longitude},
+			zoom: 15
+		});
+		var optionsMarqueur = {
+			position: map.getCenter(),
+			map: map
+		};
+		var marqueur = new google.maps.Marker(optionsMarqueur);
+  }, function (err) {
+		console.log('erreur localisation via ip : ' + err);
+  });
+}
+
+var map;
+function initMap() {
+	if(navigator.geolocation)
+		navigator.geolocation.getCurrentPosition(maPosition, posRefuse);
+}
+
+$('#textarea_bio').on('change', function() {
+	$.post("/info/ch_txt_bio", {content : this.value}).done(function(res) {
+		swal('Biographie changée !')
+	});
+});
+$('#bouton_ok').on('click', function() {
+	let spans = $('span.tag > span').text().trim();
+	let str = ' ';
+	let i = 0;
+	while (spans[i]) {
+		if (spans.charCodeAt(i) < 32 || spans.charCodeAt(i) > 126) {
+			str = str + '	';
+			i++;
+		}
+		else {
+			str = str + spans[i];
+		}
+		i++;
+	}
+	let tags = str.trim();
+	$.post("/info/ch_tags", {content : tags}).done(function(res) {
+		swal('Tags mis à jour !')
+	});
+});
+</script>
+</body>
+</html>

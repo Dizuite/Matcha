@@ -1,0 +1,254 @@
+body
+{
+  /*display: flex;*/
+  /*flex-direction: column;*/
+  text-align: center;
+}
+
+
+.content
+{
+  margin-top: 71px;
+  margin-bottom: 20px;
+  background-color: #E7E8E8;
+  border-radius: 10px;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+#formulaire_inscription
+{
+  width: 90%;
+  margin-right: 5%;
+  margin-left: 5%;
+}
+
+.navbar-right
+{
+  margin-right: 0;
+}
+
+.title
+{
+  text-align: center;
+  font-size: 40px;
+}
+
+.title_2
+{
+  text-align: center;
+  font-size: 25px;
+}
+
+#navbar
+{
+  z-index: 5;
+}
+
+#navbar>button
+{
+  margin-top: 8px;
+  margin-right: 5px;
+  float: right;
+}
+
+#nb_notif
+{
+  background-color: red;
+  color: white;
+  padding: 4px;
+  border-radius: 15px;
+  font-size: 15px;
+}
+
+#profil_pic
+{
+  width: 300px;
+  border-radius: 50%;
+}
+
+#bouton_photo
+{
+  margin-top: 3px;
+}
+
+#fade_out_popup
+{
+  display: none;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+#popup_add_photo
+{
+  position: fixed;
+  top: 30%;
+  height: 200px;
+  width: 480px;
+  background-color: white;
+  border-radius: 5px;
+}
+
+#bouton_love
+{
+  margin-top: 3px;
+}
+
+@media screen and (min-width: 500px)
+{
+  #bouton_photo
+  {
+    position: relative;
+    left: 155px;
+    bottom: 37px;
+  }
+
+  #bouton_love
+  {
+    position: relative;
+    left: 155px;
+    bottom: 37px;
+  }
+}
+
+.text_presentation
+{
+  font-size: 50px;
+}
+
+.text_email
+{
+  font-size: 21.8px;
+}
+
+#test
+{
+  background: url('../img/cmarin.jpg') no-repeat;
+  width: 100px;
+  height: 100px;
+}
+
+#my-icon-select
+{
+  display: inline-block;
+}
+
+.img_sexe
+{
+  height: 20px;
+  margin-bottom: 10px;
+}
+
+.inte_par
+{
+  display: inline-block;
+  margin-left: 10px;
+  margin-right: 10px;
+  font-size: 30px;
+}
+
+#map
+{
+  height: 300px;
+  width: 90%;
+  border-radius: 10px;
+  margin-left: 5%;
+  margin-top: 15px;
+  background-color: #D2D2D5;
+}
+
+#map>p
+{
+  padding-top: 130px;
+}
+
+/*#localisation
+{
+  display: inline-block;
+  font-size: 23px;
+  margin-bottom: 0;
+  background-color: white;
+  padding-left: 5px;
+  padding-right: 5px;
+  border: solid 1px grey;
+  width: 270px;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+#bouton_globe
+{
+  margin-bottom: 9.5px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border: solid 1px grey;
+}*/
+
+#textarea_bio
+{
+  margin-top: 30px;
+  width: 90%;
+  height: 130px;
+  outline: none;
+  resize: none;
+  border: 1px solid grey;
+  border-radius: 6px;
+}
+
+.div_tags
+{
+  display: inline-block;
+  margin-top: 20px;
+}
+
+#bouton_ok
+{
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  width: 300px;
+  border-top: none;
+}
+
+#p_users
+{
+  display: inline-block;
+  margin-top: 30px;
+  background-color: #F6F5F3;
+  width: 90%;
+  font-size: 20px;
+  text-align: left;
+  padding-left: 10px;
+  border: solid 1px #D3D0CB;
+  border-radius: 6px;
+}
+
+.div_photo_users
+{
+  display: inline-block;
+  width: 90%;
+  max-height: 200px;
+  text-align: left;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.div_photo_users>img
+{
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+em
+{
+  font-style: normal;
+}
